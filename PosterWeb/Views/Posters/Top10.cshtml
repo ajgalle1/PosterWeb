@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<PosterModels.Poster>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Top10";
 }
 
-<h1>Index</h1>
+<h1>Top10</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -18,13 +18,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Artist)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImgPath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BinaryVersionOfImage)
-            </th>
-
             <th></th>
         </tr>
     </thead>
@@ -36,19 +29,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Artist)
-            </td>
-            <td>
-                @*@Html.DisplayFor(modelItem => item.ImgPath)*@
-                    @if (!string.IsNullOrWhiteSpace(item.ImgPath)) {
-                        <img src = "@item.ImgPath" alt="image of a poster called @item.Title" style="width:150px;"/>
-                    }
-                    else
-                    {
-                        <img src="https://talkimages.blob.core.windows.net/mssaccad13/noImage.png" alt="No image" style="height:85px;" />
-                    }
-                </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BinaryVersionOfImage)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

@@ -25,6 +25,15 @@ namespace PosterWeb.Controllers
             return View(await _context.Posters.ToListAsync());
         }
 
+        // GET: Top 10 Posters
+        public async Task<IActionResult> Top10()
+        {
+            return View(await _context.Posters
+                .OrderBy(x => x.Title)
+                .Take(10)
+                .ToListAsync());
+        }
+
         // GET: Posters/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -54,7 +63,7 @@ namespace PosterWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Title,Artist")] Poster poster)
+        public async Task<IActionResult> Create([Bind("ID,Title,Artist, ImgPath")] Poster poster)
         {
             if (ModelState.IsValid)
             {
