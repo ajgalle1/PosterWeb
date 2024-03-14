@@ -14,6 +14,13 @@ namespace PosterModels
         [StringLength(2048)] //Typically  the maximum for browsers to accept this length (not always)
         public string ImgPath { get; set; }//use if something like Azure storage account
 
+
         public byte[]? BinaryVersionOfImage { get; set; } // For storing directly on my SQL Server
+
+
+        public virtual int? CategoryId { get; set; }
+        public virtual Category? Category { get; set; }
+
     }
+
 }

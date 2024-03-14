@@ -12,5 +12,7 @@ namespace PosterWeb.Data
             : base(options)
         {
         }
+    
+public DbSet<PosterModels.Category> Category { get; set; } = default!;
     }
 }
