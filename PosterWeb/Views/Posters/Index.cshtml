@@ -24,7 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.BinaryVersionOfImage)
             </th>
-
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -49,6 +51,9 @@
                 </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BinaryVersionOfImage)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

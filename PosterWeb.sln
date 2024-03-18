@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosterWeb", "PosterWeb\PosterWeb.csproj", "{215D6D5E-30EB-4AB6-97CC-9F689859383A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PosterModels", "PosterModels\PosterModels.csproj", "{F7B2EE65-C71F-408D-A473-EA16A62368F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosterModels", "PosterModels\PosterModels.csproj", "{F7B2EE65-C71F-408D-A473-EA16A62368F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosterWebDBLibrary", "PosterWebDBContext\PosterWebDBLibrary.csproj", "{0671DDAD-C436-4116-B847-8D13FE1C88EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F7B2EE65-C71F-408D-A473-EA16A62368F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7B2EE65-C71F-408D-A473-EA16A62368F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7B2EE65-C71F-408D-A473-EA16A62368F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0671DDAD-C436-4116-B847-8D13FE1C88EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0671DDAD-C436-4116-B847-8D13FE1C88EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0671DDAD-C436-4116-B847-8D13FE1C88EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0671DDAD-C436-4116-B847-8D13FE1C88EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

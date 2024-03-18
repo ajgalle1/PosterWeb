@@ -24,6 +24,11 @@
                 <span asp-validation-for="Artist" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="CategoryId" class="form-control" asp-items='(SelectList)ViewData["Categories"]'></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

@@ -24,6 +24,17 @@
             @Html.DisplayFor(model => model.Artist)
         </dd>
     </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var categoryName = @Model?.Category?.Name ?? "No Category";
+            }
+            <span>@categoryName</span>
+        </dd>
+    </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />

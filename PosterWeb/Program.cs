@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PosterWeb.Data;
+using PosterWebDBContext;
 
 namespace PosterWeb
 {
@@ -9,8 +10,13 @@ namespace PosterWeb
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+         
             // Add services to the container.
+            var PostersDbConnectionString = builder.Configuration.GetConnectionString("PostersDataDbConnectionString") ?? throw new InvalidOperationException("Connection string 'PostersDataDbConnectionString' not found.");
+            builder.Services.AddDbContext<PosterWebDbContext>(options =>
+                options.UseSqlServer(PostersDbConnectionString));
+
+
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));

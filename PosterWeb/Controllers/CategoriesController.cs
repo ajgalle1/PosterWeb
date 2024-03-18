@@ -22,7 +22,7 @@ namespace PosterWeb.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Category.ToListAsync());
+            return View(await _context.Categories.ToListAsync());
         }
 
         // GET: Categories/Details/5
@@ -33,7 +33,7 @@ namespace PosterWeb.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -73,7 +73,7 @@ namespace PosterWeb.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace PosterWeb.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
+            var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -139,10 +139,10 @@ namespace PosterWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _context.Category.FindAsync(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category != null)
             {
-                _context.Category.Remove(category);
+                _context.Categories.Remove(category);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace PosterWeb.Controllers
 
         private bool CategoryExists(int id)
         {
-            return _context.Category.Any(e => e.Id == id);
+            return _context.Categories.Any(e => e.Id == id);
         }
     }
 }

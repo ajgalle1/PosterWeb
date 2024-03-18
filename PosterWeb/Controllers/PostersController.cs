@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,25 +14,30 @@ namespace PosterWeb.Controllers
     public class PostersController : Controller
     {
         private readonly ApplicationDbContext _context;
-
+        private readonly SelectList _categories;
         public PostersController(ApplicationDbContext context)
         {
             _context = context;
+            _categories = new SelectList(_context.Categories, "Id", "Name");
+
         }
 
         // GET: Posters
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Posters.ToListAsync());
+            return View(await _context.Posters
+                                      .Include(x=>x.Category)
+                                      .ToListAsync());
         }
 
         // GET: Top 10 Posters
         public async Task<IActionResult> Top10()
         {
             return View(await _context.Posters
-                .OrderBy(x => x.Title)
-                .Take(10)
-                .ToListAsync());
+                                    .Include(x=>x.Category)
+                                    .OrderBy(x => x.Title)
+                                    .Take(10)
+                                    .ToListAsync());
         }
 
         // GET: Posters/Details/5
@@ -41,13 +47,17 @@ namespace PosterWeb.Controllers
             {
                 return NotFound();
             }
-
+            //select * from Posters where ID = id
             var poster = await _context.Posters
+                .Include(x => x.Category)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
             if (poster == null)
             {
                 return NotFound();
             }
+
+
 
             return View(poster);
         }
@@ -55,6 +65,7 @@ namespace PosterWeb.Controllers
         // GET: Posters/Create
         public IActionResult Create()
         {
+            ViewData["CategoryId"] = _categories;
             return View();
         }
 
@@ -63,14 +74,21 @@ namespace PosterWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Title,Artist, ImgPath")] Poster poster)
+        public async Task<IActionResult> Create([Bind("ID,Title,Artist, ImgPath, CategoryId")] Poster poster)
         {
+            if (poster.CategoryId is null)
+            {
+                ViewData["CategoryId"] = _categories;
+                return View(poster);
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Add(poster);
+                _context.Posters.Add(poster);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CategoryId"] = _categories;
             return View(poster);
         }
 
@@ -87,6 +105,7 @@ namespace PosterWeb.Controllers
             {
                 return NotFound();
             }
+            ViewData["CategoryId"] = _categories;
             return View(poster);
         }
 
@@ -95,8 +114,10 @@ namespace PosterWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,Artist")] Poster poster)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Title,Artist,CategoryId")] Poster poster)
         {
+         
+            
             if (id != poster.ID)
             {
                 return NotFound();
@@ -106,7 +127,7 @@ namespace PosterWeb.Controllers
             {
                 try
                 {
-                    _context.Update(poster);
+                    _context.Posters.Update(poster);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -122,6 +143,7 @@ namespace PosterWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CategoryId"] = _categories;
             return View(poster);
         }
 
@@ -134,7 +156,8 @@ namespace PosterWeb.Controllers
             }
 
             var poster = await _context.Posters
-                .FirstOrDefaultAsync(m => m.ID == id);
+                       .Include(x => x.Category)
+                       .FirstOrDefaultAsync(m => m.ID == id);
             if (poster == null)
             {
                 return NotFound();
