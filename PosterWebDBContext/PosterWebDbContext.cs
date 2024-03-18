@@ -1,11 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using PosterModels;
 
 namespace PosterWebDBContext 
 {
     public class PosterWebDbContext : DbContext
     {
         private static IConfigurationRoot _configuration;
+        public DbSet<Poster> Posters { get; set; } = default!;
+        public DbSet<Category> Categories { get; set; } 
         public PosterWebDbContext()
         {
             

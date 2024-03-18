@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PosterModels;
 using PosterWeb.Data;
+using PosterWebDBContext;
 
 namespace PosterWeb.Controllers
 {
     public class CategoriesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly PosterWebDbContext _context;
 
-        public CategoriesController(ApplicationDbContext context)
+        public CategoriesController(PosterWebDbContext context)
         {
             _context = context;
         }

@@ -8,14 +8,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PosterModels;
 using PosterWeb.Data;
+using PosterWebDBContext;
 
 namespace PosterWeb.Controllers
 {
     public class PostersController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly PosterWebDbContext _context;
         private readonly SelectList _categories;
-        public PostersController(ApplicationDbContext context)
+        public PostersController(PosterWebDbContext context)
         {
             _context = context;
             _categories = new SelectList(_context.Categories, "Id", "Name");
@@ -105,7 +106,8 @@ namespace PosterWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = _categories;
+         
+            ViewData["Categories"] = _categories;
             return View(poster);
         }
 
@@ -143,7 +145,7 @@ namespace PosterWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = _categories;
+            ViewData["Categories"] = _categories;
             return View(poster);
         }
 

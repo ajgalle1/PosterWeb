@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PosterWebDBContext;
 
@@ -11,9 +12,11 @@ using PosterWebDBContext;
 namespace PosterWebDBLibrary.Migrations
 {
     [DbContext(typeof(PosterWebDbContext))]
-    partial class PosterWebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240318185719_initial_migration_on_new_database")]
+    partial class initial_migration_on_new_database
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
