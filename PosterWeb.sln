@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosterModels", "PosterModel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosterWebDBLibrary", "PosterWebDBContext\PosterWebDBLibrary.csproj", "{0671DDAD-C436-4116-B847-8D13FE1C88EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostersWebServiceLayer", "PostersWebServiceLayer\PostersWebServiceLayer.csproj", "{D772348B-5A9B-4C40-BF61-7A42AF75DAD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostersWebDbLayer", "PostersWebDbLayer\PostersWebDbLayer.csproj", "{05CA5A48-1233-4B6A-B7C5-86C610FBFA40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{0671DDAD-C436-4116-B847-8D13FE1C88EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0671DDAD-C436-4116-B847-8D13FE1C88EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0671DDAD-C436-4116-B847-8D13FE1C88EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D772348B-5A9B-4C40-BF61-7A42AF75DAD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D772348B-5A9B-4C40-BF61-7A42AF75DAD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D772348B-5A9B-4C40-BF61-7A42AF75DAD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D772348B-5A9B-4C40-BF61-7A42AF75DAD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05CA5A48-1233-4B6A-B7C5-86C610FBFA40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CA5A48-1233-4B6A-B7C5-86C610FBFA40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CA5A48-1233-4B6A-B7C5-86C610FBFA40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CA5A48-1233-4B6A-B7C5-86C610FBFA40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
