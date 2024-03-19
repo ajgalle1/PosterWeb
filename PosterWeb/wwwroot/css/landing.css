@@ -1,0 +1,38 @@
+.carousel {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: 400px;
+    position: relative;
+}
+
+.carousel__face {
+    display: flex;
+    /* Double the animation duration to ensure smooth transition */
+    animation: moveCarousel 10s linear infinite;
+    animation-play-state: running;
+}
+
+@keyframes moveCarousel {
+    0% {
+        transform: translateX(0);
+    }
+    /* Move the carousel by one image's width */
+    100% {
+        transform: translateX(calc(-100% * var(--num-images)));
+    }
+}
+
+.carousel__face img {
+    flex: 0 0 auto;
+    width: 100%; /* Ensure each image takes full width */
+    max-height: 400px;
+    display: block;
+    margin: 0 auto;
+    object-fit: cover;
+}
+
+/* Set the number of images here */
+.carousel__face {
+    --num-images: 5; /* Change this to the number of images */
+}

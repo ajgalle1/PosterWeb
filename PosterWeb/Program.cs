@@ -10,13 +10,15 @@ namespace PosterWeb
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-         
+
             // Add services to the container.
             var PostersDbConnectionString = builder.Configuration.GetConnectionString("PostersDataDbConnectionString") ?? throw new InvalidOperationException("Connection string 'PostersDataDbConnectionString' not found.");
+
+            // Configure and add PosterWebDbContext
             builder.Services.AddDbContext<PosterWebDbContext>(options =>
                 options.UseSqlServer(PostersDbConnectionString));
 
-
+            // Configure DbContext for Identity
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
