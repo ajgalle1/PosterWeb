@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PostersWebDbLayer
 {
-    internal class CategoriesRepository : ICategoriesRepository
+    public class CategoriesRepository : ICategoriesRepository
     {
         private readonly PosterWebDbContext _context;
 

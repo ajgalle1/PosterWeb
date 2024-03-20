@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PostersWebDbLayer
+namespace PostersWebServiceLayer
 {
-    public interface IPostersRepository
+    public interface IPostersService
     {
         Task<List<Poster>> GetAllAsync();
         Task<Poster?> GetAsync(int id);
@@ -16,7 +16,6 @@ namespace PostersWebDbLayer
         Task<int> DeleteAsync(Poster poster);
         Task<int> DeleteAsync(int id);
         Task<bool> ExistsAsync(int id);
-
 
     }
 }

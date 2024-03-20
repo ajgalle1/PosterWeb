@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PostersWebDbLayer
+namespace PostersWebServiceLayer
 {
-    public interface ICategoriesRepository
+   public interface ICategoriesService
     {
-        //CRUD Operatiosn
+        //CRUD Operations
         Task<List<Category>> GetAllAsync();
         Task<Category?> GetAsync(int id);
 
