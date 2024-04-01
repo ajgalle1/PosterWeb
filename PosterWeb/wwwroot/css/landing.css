@@ -1,0 +1,59 @@
+.carousel {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: 400px;
+    position: relative;
+}
+
+.carousel__face {
+    display: flex;
+    /* Adjust animation duration based on the number of images and desired speed */
+    animation: moveCarousel 20s linear infinite;
+    animation-play-state: running;
+}
+
+    /* Create a pseudo-element to hold cloned images for seamless looping */
+    .carousel__face::before,
+    .carousel__face::after {
+        content: "";
+        display: flex;
+        width: var(--image-width); /* Match image width */
+    }
+
+    .carousel__face::before {
+        /* Place cloned images at the beginning */
+        transform: translateX(-100%);
+    }
+
+    .carousel__face::after {
+        /* Place cloned images at the end */
+        transform: translateX(calc(100% + var(--image-width) * var(--num-images)));
+    }
+
+@keyframes moveCarousel {
+    0% {
+        transform: translateX(0);
+    }
+    /* 
+     - Update calculation here to consider total width of carousel 
+     - with cloned images. 
+  */
+    100% {
+        transform: translateX(calc(-1 * ((var(--image-width) + 40px) * var(--num-images) * 2)));
+    }
+}
+
+.carousel__face img {
+    width: var(--image-width);
+    max-height: 400px;
+    display: block;
+    margin: 0 5px; /* Reduce margin for less space */
+    object-fit: cover;
+}
+
+/* Set the number of images and image width here */
+.carousel__face {
+    --num-images: 5;
+    --image-width: 300px;
+}

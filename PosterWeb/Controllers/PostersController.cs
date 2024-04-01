@@ -129,6 +129,7 @@ namespace PosterWeb.Controllers
             {
                 try
                 {
+                    //Will replace next 2 lines with a single call to a service, passing the poster.
                     _context.Posters.Update(poster);
                     await _context.SaveChangesAsync();
                 }

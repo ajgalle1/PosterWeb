@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PosterWeb.Models;
+using PosterWebDBContext;
 using System.Diagnostics;
 
 namespace PosterWeb.Controllers
@@ -8,15 +11,28 @@ namespace PosterWeb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly PosterWebDbContext _context;
+
+        
+        public HomeController(ILogger<HomeController> logger, PosterWebDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            var posters = await _context.Posters
+                                        .Include(x => x.Category)
+                                        .OrderBy(x => x.Title)
+                                        .Take(5)
+                                        .ToListAsync();
+
+            return View(posters);
         }
+        
+        
+
 
         public IActionResult Privacy()
         {
