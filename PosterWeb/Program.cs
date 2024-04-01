@@ -28,6 +28,21 @@ namespace PosterWeb
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
+            //BEGIN Code for options when pivoting to Azure SQL database
+
+            var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlServer(connectionString).Options;
+            using (var context = new ApplicationDbContext(contextOptions))
+            {
+                context.Database.Migrate();
+            }
+
+            var contextOptions2 = new DbContextOptionsBuilder<PosterWebDbContext>().UseSqlServer(connectionString).Options;
+            using (var context = new PosterWebDbContext(contextOptions2))
+            {
+                context.Database.Migrate();
+            }
+
+            //END Code for options when pivoting to Azure SQL database
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
