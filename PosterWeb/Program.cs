@@ -36,7 +36,7 @@ namespace PosterWeb
                 context.Database.Migrate();
             }
 
-            var contextOptions2 = new DbContextOptionsBuilder<PosterWebDbContext>().UseSqlServer(connectionString).Options;
+            var contextOptions2 = new DbContextOptionsBuilder<PosterWebDbContext>().UseSqlServer(PostersDbConnectionString).Options;
             using (var context = new PosterWebDbContext(contextOptions2))
             {
                 context.Database.Migrate();
