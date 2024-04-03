@@ -9,11 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosterModels", "PosterModel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosterWebDBLibrary", "PosterWebDBContext\PosterWebDBLibrary.csproj", "{0671DDAD-C436-4116-B847-8D13FE1C88EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostersWebServiceLayer", "PostersWebServiceLayer\PostersWebServiceLayer.csproj", "{D772348B-5A9B-4C40-BF61-7A42AF75DAD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostersWebServiceLayer", "PostersWebServiceLayer\PostersWebServiceLayer.csproj", "{D772348B-5A9B-4C40-BF61-7A42AF75DAD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostersWebDbLayer", "PostersWebDbLayer\PostersWebDbLayer.csproj", "{05CA5A48-1233-4B6A-B7C5-86C610FBFA40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostersWebDbLayer", "PostersWebDbLayer\PostersWebDbLayer.csproj", "{05CA5A48-1233-4B6A-B7C5-86C610FBFA40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostersWebDbLayer_Tests", "PostersWebDbLayer_Tests\PostersWebDbLayer_Tests.csproj", "{C411723C-D18F-4D17-ABB4-2FAF2385A064}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostersWebDbLayer_Tests", "PostersWebDbLayer_Tests\PostersWebDbLayer_Tests.csproj", "{C411723C-D18F-4D17-ABB4-2FAF2385A064}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostersWebServiceLayerTests", "PostersWebServiceLayerTests\PostersWebServiceLayerTests.csproj", "{870ABCF4-CE1C-4DE7-8A17-3432BAFF8D97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{C411723C-D18F-4D17-ABB4-2FAF2385A064}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C411723C-D18F-4D17-ABB4-2FAF2385A064}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C411723C-D18F-4D17-ABB4-2FAF2385A064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{870ABCF4-CE1C-4DE7-8A17-3432BAFF8D97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{870ABCF4-CE1C-4DE7-8A17-3432BAFF8D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{870ABCF4-CE1C-4DE7-8A17-3432BAFF8D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{870ABCF4-CE1C-4DE7-8A17-3432BAFF8D97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

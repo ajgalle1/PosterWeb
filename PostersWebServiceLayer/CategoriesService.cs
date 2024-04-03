@@ -3,11 +3,11 @@ using PosterWebDBContext;
 using PostersWebDbLayer;
 namespace PostersWebServiceLayer
 {
-    public class CategoriesServices : ICategoriesService
+    public class CategoriesService : ICategoriesService
     {
         private readonly ICategoriesRepository _categoryRepository;
 
-        public CategoriesServices(ICategoriesRepository categoryRepository)
+        public CategoriesService(ICategoriesRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;  
         }

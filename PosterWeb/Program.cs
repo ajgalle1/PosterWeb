@@ -1,7 +1,12 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using PosterWeb.Data;
+using Microsoft.AspNetCore.Identity; //
+using Microsoft.EntityFrameworkCore; //
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using PostersWebDbLayer;//
+using PostersWebServiceLayer;//
+using PosterWeb.Data; //
 using PosterWebDBContext;
+using PosterWebDBLibrary;
 
 namespace PosterWeb
 {
@@ -28,21 +33,12 @@ namespace PosterWeb
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
-            //BEGIN Code for options when pivoting to Azure SQL database
+            // Add our own services:
+            builder.Services.AddScoped<IPostersRepository, PostersRepository>();
+            builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+            builder.Services.AddScoped<IPostersService, PostersServices>();
+            builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 
-            var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>().UseSqlServer(connectionString).Options;
-            using (var context = new ApplicationDbContext(contextOptions))
-            {
-                context.Database.Migrate();
-            }
-
-            var contextOptions2 = new DbContextOptionsBuilder<PosterWebDbContext>().UseSqlServer(PostersDbConnectionString).Options;
-            using (var context = new PosterWebDbContext(contextOptions2))
-            {
-                context.Database.Migrate();
-            }
-
-            //END Code for options when pivoting to Azure SQL database
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -53,7 +49,6 @@ namespace PosterWeb
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

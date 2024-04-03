@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PosterModels\PosterModels.csproj" />
+    <ProjectReference Include="..\PostersWebServiceLayer\PostersWebServiceLayer.csproj" />
     <ProjectReference Include="..\PosterWebDBContext\PosterWebDBLibrary.csproj" />
   </ItemGroup>
 

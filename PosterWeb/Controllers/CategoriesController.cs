@@ -1,29 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using PosterModels;
+using PostersWebServiceLayer;
 using PosterWeb.Data;
+using PosterWeb.Models;
 using PosterWebDBContext;
 
 namespace PosterWeb.Controllers
 {
     public class CategoriesController : Controller
     {
-        private readonly PosterWebDbContext _context;
+        private readonly ICategoriesService _categoriesService;
+        private readonly IMemoryCache _memoryCache;
 
-        public CategoriesController(PosterWebDbContext context)
+        public CategoriesController(ICategoriesService categoriesService, IMemoryCache memoryCache)
         {
-            _context = context;
+            _categoriesService = categoriesService;
+            _memoryCache = memoryCache;
         }
 
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categories.ToListAsync());
+            var categories = await GetCategoriesUsingCache();// new List<Category>();
+
+            // Check if data is in cache, if so, get it from the cache
+            if (!_memoryCache.TryGetValue(CacheConstants.CATEGORIES_KEY, out categories))
+            {
+                // If not in cache, get from service
+                categories = await _categoriesService.GetAllAsync();
+
+                // Store in cache
+                _memoryCache.Set(CacheConstants.CATEGORIES_KEY, categories);
+            }
+
+            // Return the data
+            return View(categories);
         }
 
         // GET: Categories/Details/5
@@ -34,8 +50,9 @@ namespace PosterWeb.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var category = await GetSingleCategoryById(id);
+            //var category = await _categoriesService.GetAsync(id.Value);
+
             if (category == null)
             {
                 return NotFound();
@@ -51,19 +68,24 @@ namespace PosterWeb.Controllers
         }
 
         // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(category);
-                await _context.SaveChangesAsync();
+                await _categoriesService.AddOrUpdateAsync(category);
+                InvalidateCache();
+                //_memoryCache.Remove(CacheConstants.CATEGORIES_KEY); // Clear cache after adding new category
                 return RedirectToAction(nameof(Index));
             }
+
             return View(category);
+        }
+
+        private void InvalidateCache()
+        {
+            _memoryCache.Remove(CacheConstants.CATEGORIES_KEY);
         }
 
         // GET: Categories/Edit/5
@@ -74,17 +96,18 @@ namespace PosterWeb.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
+            //var category = await _categoriesService.GetAsync(id.Value);
+            var category = await GetSingleCategoryById(id);
+
             if (category == null)
             {
                 return NotFound();
             }
+
             return View(category);
         }
 
         // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Category category)
@@ -98,22 +121,18 @@ namespace PosterWeb.Controllers
             {
                 try
                 {
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
+                    await _categoriesService.AddOrUpdateAsync(category);
+                    InvalidateCache();
+                    //_memoryCache.Remove(CacheConstants.CATEGORIES_KEY); // Clear cache after updating category
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return NotFound();
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(category);
         }
 
@@ -124,9 +143,9 @@ namespace PosterWeb.Controllers
             {
                 return NotFound();
             }
+            Category? category = await GetSingleCategoryById(id);
+            //var category = await _categoriesService.GetAsync(id.Value);
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
                 return NotFound();
@@ -140,19 +159,49 @@ namespace PosterWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+            try
             {
-                _context.Categories.Remove(category);
+                await _categoriesService.DeleteAsync(id);
+                InvalidateCache();
+                // _memoryCache.Remove(CacheConstants.CATEGORIES_KEY); // Clear cache after deleting category
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return NotFound();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        #region "Helper Methods"
         private bool CategoryExists(int id)
         {
-            return _context.Categories.Any(e => e.Id == id);
+            var category = GetSingleCategoryById(id).Result;
+            return category != null;
         }
+        private async Task<List<Category>?> GetCategoriesUsingCache()
+        {
+            var categories = new List<Category>();
+
+            //is the data in the cache? if so, get it from the cache
+            if (!_memoryCache.TryGetValue(CacheConstants.CATEGORIES_KEY, out categories))
+            {
+                //if not, get it from the database
+                //and set the local list
+                categories = await _categoriesService.GetAllAsync();
+
+                //store it in the cache
+                _memoryCache.Set(CacheConstants.CATEGORIES_KEY, categories);
+            }
+
+            return categories;
+        }
+
+        private async Task<Category?> GetSingleCategoryById(int? id)
+        {
+            var categories = await GetCategoriesUsingCache();
+            return categories?.SingleOrDefault(x => x.Id == id);
+        }
+
+        #endregion
     }
 }
