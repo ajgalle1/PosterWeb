@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -12,6 +13,8 @@ using PosterWebDBContext;
 
 namespace PosterWeb.Controllers
 {
+    [Authorize]
+
     public class CategoriesController : Controller
     {
         private readonly ICategoriesService _categoriesService;
@@ -41,7 +44,7 @@ namespace PosterWeb.Controllers
             // Return the data
             return View(categories);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -60,13 +63,14 @@ namespace PosterWeb.Controllers
 
             return View(category);
         }
-
+        [Authorize(Roles = "admin")]
         // GET: Categories/Create
         public IActionResult Create()
         {
             return View();
         }
-
+        
+        [Authorize(Roles = "Admin")]
         // POST: Categories/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -88,6 +92,7 @@ namespace PosterWeb.Controllers
             _memoryCache.Remove(CacheConstants.CATEGORIES_KEY);
         }
 
+        [Authorize(Roles = UserRolesService.ADMIN_ROLE_NAME)]
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -107,6 +112,7 @@ namespace PosterWeb.Controllers
             return View(category);
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: Categories/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -136,6 +142,7 @@ namespace PosterWeb.Controllers
             return View(category);
         }
 
+        [Authorize(Roles = UserRolesService.ADMIN_ROLE_NAME)]
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -153,7 +160,7 @@ namespace PosterWeb.Controllers
 
             return View(category);
         }
-
+        [Authorize(Roles = UserRolesService.ADMIN_ROLE_NAME)]
         // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

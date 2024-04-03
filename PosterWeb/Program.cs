@@ -30,6 +30,7 @@ namespace PosterWeb
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
@@ -38,6 +39,8 @@ namespace PosterWeb
             builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
             builder.Services.AddScoped<IPostersService, PostersServices>();
             builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+
+            builder.Services.AddScoped<IUserRolesService, UserRolesService>();
 
             var app = builder.Build();
 
